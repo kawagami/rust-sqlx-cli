@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t kawagami77/rust-sqlx-cli .
+cd sqlx-cli && docker build -t kawagami77/rust-sqlx-cli .
