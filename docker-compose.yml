@@ -1,0 +1,35 @@
+services:
+  sqlx-cli:
+    restart: "no"
+    # image: kawagami77/rust-sqlx-cli
+    build:
+      context: ./sqlx-cli
+      dockerfile: Dockerfile  # 如果 Dockerfile 名字不同，改成對應的名稱
+    working_dir: /app
+    container_name: sqlx-cli
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - ./sqlx-cli/.env:/app/.env
+      - ./sqlx-cli/migrations:/app/migrations
+    # environment:
+    #   - TZ=Asia/Taipei
+    depends_on:
+      pgsql:
+        condition: service_healthy
+  pgsql:
+    image: postgres:16-alpine
+    container_name: pgsql
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+      - "POSTGRES_DB=kawa"
+      - "POSTGRES_USER=kawa"
+      - "POSTGRES_PASSWORD=kawa"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kawa"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
