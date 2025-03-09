@@ -1,5 +1,5 @@
 # 第一階段：構建工具
-FROM rust:1.82.0-slim-bookworm AS builder
+FROM rust:1.85.0-slim-bookworm AS builder
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y \
