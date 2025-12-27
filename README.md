@@ -1,5 +1,9 @@
 # migrate tool
 
+# 2025/12/27 紀錄 image size
+* 只裝 pgsql 的 features 的話 27.6MB
+* 不特別設定的話 31.1MB
+
 # env
 * linux
 
